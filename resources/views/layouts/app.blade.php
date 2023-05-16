@@ -13,12 +13,15 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
+
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -75,6 +78,25 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+        <footer id="footer-area" class="bg-dark text-light">
+            <div class="row">
+                <div class="col-md-2">
+                    <ul class="nav flex-column">
+                        <li class="nav-item"><a href="#feature" class="nav-link link-light">特徴</a></li>
+                        <li class="nav-item"><a href="#usage" class="nav-link link-light">使い方</a></li>
+                        <li class="nav-item"><a href="{{route('register')}}" class="nav-link link-light">登録</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <ul class="nav flex-column">
+                        <li class="nav-item"><a href="" class="nav-link link-light">利用規約</a></li>
+                        <li class="nav-item"><a href="" class="nav-link link-light">プライバシーポリシー</a></li>
+                        <li class="nav-item"><a href="" class="nav-link link-light">お問い合わせ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
     </div>
 </body>
 </html>

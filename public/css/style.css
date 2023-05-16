@@ -1,0 +1,49 @@
+/* welcome */
+#header-area {
+    position: relative;
+}
+#header-area h1 {
+    position: absolute;     /* parentに対してabsolute */
+    top: 50%;
+    left: 50%;
+    font-weight: bold;
+    transform: translate(-50%,-50%);
+    margin:0;
+    padding:0;
+}
+#header-area p {
+    position: absolute;     /* 親に対してabsolute */
+    top: 70%;
+    left: 50%;
+    font-weight: bold;
+    transform: translate(-50%,-70%);
+    margin:0;
+    padding:0;
+    opacity: 0.5;
+}
+#header-area img {
+    width: 100%;
+    height: 200px;
+}
+#main-area section {
+    text-align: center;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+#feature img {
+    width: 120px;
+    height: 120px;
+}
+#feature p {
+    opacity: 0.7;
+}
+#usage video {
+    width: 300px;
+    height: 300px;
+}
+#footer-area {
+    padding: 20px 0px;
+}
+#footer-area li {
+    font-size: small;
+}
