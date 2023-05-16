@@ -47,3 +47,39 @@
 #footer-area li {
     font-size: small;
 }
+/* home */
+#side {
+    text-align: center;
+    background-color: lightblue;
+}
+#main {
+    background-color: lightgreen;
+}
+/* calendar */
+#calendar_table {
+    table-layout: fixed;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+}
+#calendar_table th, 
+#calendar_table td {
+    text-align: center;
+}
+#calendar_table th:nth-of-type(1),
+#calendar_table td:nth-of-type(1) {
+    color: red;
+}
+#calendar_table th:nth-of-type(7),
+#calendar_table td:nth-of-type(7) {
+    color: blue;
+}
+#calendar_table .today {
+    text-decoration: underline;
+}
+#calendar_table .holiday {
+    color: red;
+}
+#calendar_table .selected {
+    border: 3px solid red;
+}

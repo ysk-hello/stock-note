@@ -21,8 +21,17 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('home');
+        if($request->has('ymd')){
+            $selected_date = $request->ymd;
+        }elseif($request->has('ym')){
+            $selected_date = $request->ym. '-01';
+        }
+        else{
+            $selected_date = date('Y-m-d');
+        }
+
+        return view('home', ['selected_date' => $selected_date]);
     }
 }
