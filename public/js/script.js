@@ -1,9 +1,11 @@
 let calendarTable = document.getElementById("calendar_table");
 
-for(let i = 0; i < calendarTable.rows.length; i++){
-  for(let j = 0; j < calendarTable.rows[i].cells.length; j++){
-    calendarTable.rows[i].cells[j].id = i + "-" + j;
-    calendarTable.rows[i].cells[j].onclick = cellClicked;
+if(calendarTable){
+  for(let i = 0; i < calendarTable.rows.length; i++){
+    for(let j = 0; j < calendarTable.rows[i].cells.length; j++){
+      calendarTable.rows[i].cells[j].id = i + "-" + j;
+      calendarTable.rows[i].cells[j].onclick = cellClicked;
+    }
   }
 }
 

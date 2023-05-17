@@ -50,10 +50,10 @@
 /* home */
 #side {
     text-align: center;
-    background-color: lightblue;
+    border: 1px solid red;
 }
 #main {
-    background-color: lightgreen;
+    border: 1px solid blue;
 }
 /* calendar */
 #calendar_table {
