@@ -3,7 +3,7 @@
         <div id="side" class="col-md-3">
             <div class="row">
                 <div class="col">
-                    <input type="file" name="company-file" @change="onCheckUpload">
+                    <input type="file" class="form-control-file" name="company-file" @change="onCheckUpload">
                 </div>
             </div>
             <div class="row mt-5">
