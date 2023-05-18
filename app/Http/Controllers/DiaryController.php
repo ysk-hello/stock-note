@@ -16,10 +16,7 @@ class DiaryController extends Controller
     {
         if($request->has('ymd')){
             $selected_date = $request->ymd;
-        }elseif($request->has('ym')){
-            $selected_date = $request->ym. '-01';
-        }
-        else{
+        }else{
             $selected_date = date('Y-m-d');
         }
 

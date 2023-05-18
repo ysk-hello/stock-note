@@ -18,6 +18,9 @@ const app = createApp({});
 import Diary from './components/Diary.vue';
 app.component('diary', Diary);
 
+import Calendar from './components/Calendar.vue';
+app.component('calendar', Calendar);
+
 import SearchCompany from './components/SearchCompany.vue';
 app.component('search-company', SearchCompany);
 
