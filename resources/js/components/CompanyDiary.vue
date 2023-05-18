@@ -1,4 +1,5 @@
 <template>
+    <h2>{{ ymd }}</h2>
     <h4>{{ code }}</h4>
     <div class="row">
         <div class="col">
@@ -27,7 +28,6 @@
     export default {
         mounted() {
             console.log('CompanyDiary mounted.');
-            //console.log(this.ymd);
 
             this.getDiary();
             this.getDiaries();

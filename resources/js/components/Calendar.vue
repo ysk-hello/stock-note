@@ -19,13 +19,13 @@
         <tbody>
             <tr v-for="week in weeks">
                 <!-- https://teratail.com/questions/178689 -->
-                <td @click="cellClicked">{{week.sun}}</td>
-                <td @click="cellClicked">{{week.mon}}</td>
-                <td @click="cellClicked">{{week.tue}}</td>
-                <td @click="cellClicked">{{week.wed}}</td>
-                <td @click="cellClicked">{{week.thu}}</td>
-                <td @click="cellClicked">{{week.fri}}</td>
-                <td @click="cellClicked">{{week.sat}}</td>
+                <td :class="{today: week.sun.today, selected: week.sun.selected}" @click="cellClicked">{{week.sun.date}}</td>
+                <td :class="{today: week.mon.today, selected: week.mon.selected}" @click="cellClicked">{{week.mon.date}}</td>
+                <td :class="{today: week.tue.today, selected: week.tue.selected}" @click="cellClicked">{{week.tue.date}}</td>
+                <td :class="{today: week.wed.today, selected: week.wed.selected}" @click="cellClicked">{{week.wed.date}}</td>
+                <td :class="{today: week.thu.today, selected: week.thu.selected}" @click="cellClicked">{{week.thu.date}}</td>
+                <td :class="{today: week.fri.today, selected: week.fri.selected}" @click="cellClicked">{{week.fri.date}}</td>
+                <td :class="{today: week.sat.today, selected: week.sat.selected}" @click="cellClicked">{{week.sat.date}}</td>
             </tr>
         </tbody>
     </table>
@@ -36,9 +36,7 @@
     dayjs.locale("ja");
 
     export default {
-        mounted() {
-            console.log('Calendar mounted.');
-
+        created() {
             let searchParams = new URLSearchParams(window.location.search);
             this.code = searchParams.get('code');
 
@@ -48,8 +46,11 @@
             else{
                 this.selectedDate = dayjs();
             }
+        },
+        mounted() {
+            console.log('Calendar mounted.');
+
             this.setCalendarLines();
-            console.log(this.weeks.length);
         },
         data() {
             return {
@@ -58,53 +59,92 @@
                 weeks: []
             }
         },
-        //props: ['code', 'ymd'],     // https://vuejs.org/guide/components/props.html
         methods: {
             setCalendarLines() {
                 // 初日の曜日を計算
                 // https://zenn.dev/akkie1030/articles/javascript-dayjs
                 let dayOfWeek = this.selectedDate.startOf('month').format('d');
-                console.log(dayOfWeek);
 
                 // 月の日数を計算
                 let count = this.selectedDate.endOf('month').format('D');
-                console.log(count);
 
                 this.weeks = [];
                 let day = 1;
                 while(day<=count){
                     let week = {
-                        sun: '',
-                        mon: '',
-                        tue: '',
-                        wed: '',
-                        thu: '',
-                        fri: '',
-                        sat: ''
+                        sun: {
+                            date: '',
+                            selected: false,
+                            today: false,
+                        },
+                        mon: {
+                            date: '',
+                            selected: false,
+                            today: false,
+                        },
+                        tue: {
+                            date: '',
+                            selected: false,
+                            today: false,
+                        },
+                        wed: {
+                            date: '',
+                            selected: false,
+                            today: false,
+                        },
+                        thu: {
+                            date: '',
+                            selected: false,
+                            today: false,
+                        },
+                        fri: {
+                            date: '',
+                            selected: false,
+                            today: false,
+                        },
+                        sat: {
+                            date: '',
+                            selected: false,
+                            today: false,
+                        },
                     };
 
                     while(dayOfWeek % 7 < 7){
                         switch(dayOfWeek % 7){
                             case 0:
-                                week.sun = day;
+                                week.sun.date = day;
+                                week.sun.today = this.isToday(day);
+                                week.sun.selected = this.isSelected(day);
                                 break;
                             case 1:
-                                week.mon = day;
+                                week.mon.date = day;
+                                week.mon.today = this.isToday(day);
+                                week.mon.selected = this.isSelected(day);
                                 break;
                             case 2:
-                                week.tue = day;
+                                week.tue.date = day;
+                                week.tue.today = this.isToday(day);
+                                week.tue.selected = this.isSelected(day);
                                 break;
                             case 3:
-                                week.wed = day;
+                                week.wed.date = day;
+                                week.wed.today = this.isToday(day);
+                                week.wed.selected = this.isSelected(day);
                                 break;
                             case 4:
-                                week.thu = day;
+                                week.thu.date = day;
+                                week.thu.today = this.isToday(day);
+                                week.thu.selected = this.isSelected(day);
                                 break;
                             case 5:
-                                week.fri = day;
+                                week.fri.date = day;
+                                week.fri.today = this.isToday(day);
+                                week.fri.selected = this.isSelected(day);
                                 break;
                             case 6:
-                                week.sat = day;
+                                week.sat.date = day;
+                                week.sat.today = this.isToday(day);
+                                week.sat.selected = this.isSelected(day);
                                 break;
                         }
 
@@ -116,6 +156,16 @@
                     this.weeks.push(week);
                 }
             },
+            isToday(day){
+                // 本日
+                let today = dayjs().format('YYYY-MM-DD');
+                return this.selectedDate.date(day).format('YYYY-MM-DD') === today;
+            },
+            isSelected(day){
+                // 選択日
+                let selected = this.selectedDate.format('YYYY-MM-DD');
+                return this.selectedDate.date(day).format('YYYY-MM-DD') === selected;
+            },
             cellClicked(e) {
                 console.log('click');
                 let date = e.target.innerText;
@@ -123,7 +173,7 @@
 
                 if(date){
                     this.selectedDate = this.selectedDate.date(date);
-                    console.log(this.selectedDate.format('YYYY-MM-DD'));
+                    // console.log(this.selectedDate.format('YYYY-MM-DD'));
 
                     let uRLSearchParams = new URLSearchParams();
                     uRLSearchParams.append('ymd', this.selectedDate.format('YYYY-MM-DD'));
@@ -133,10 +183,8 @@
 
                     location.href =  '?' + uRLSearchParams.toString();
                 }
-
             },
             prev() {
-                console.log(this.selectedDate.subtract(1, 'M').format('YYYY-MM-DD'));
                 return this.selectedDate.subtract(1, 'M').format('YYYY-MM-DD');
             },
             next() {

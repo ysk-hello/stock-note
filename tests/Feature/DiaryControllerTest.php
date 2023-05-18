@@ -32,21 +32,6 @@ class DiaryControllerTest extends TestCase
         $this->assertEquals('2022-01-01', $data['selected_date']);
     }
 
-    public function test_index_login_pass_ym(): void
-    {
-        $user = User::where('name', 'test')->first();
-        $this->actingAs($user);
-
-        $response = $this->get(route('diary', ['ym' => '2022-01']));
-
-        $response->assertStatus(200);
-        $response->assertViewIs('diary');
-
-        $data = $response->getOriginalContent()->getData();
-
-        $this->assertEquals('2022-01-01', $data['selected_date']);
-    }
-
     public function test_index_login_pass(): void
     {
         $user = User::where('name', 'test')->first();

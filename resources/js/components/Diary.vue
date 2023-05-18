@@ -1,4 +1,5 @@
 <template>
+    <h2>{{ ymd }}</h2>
     <div class="row">
         <div class="col">
             <textarea class="form-control" name="diary" cols="30" rows="10" v-model="diaryText"></textarea>

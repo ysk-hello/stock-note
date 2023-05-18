@@ -56,12 +56,12 @@
     border: 1px solid blue;
 }
 /* calendar */
-/* #calendar_table {
+#calendar_table {
     table-layout: fixed;
-    width: 200px;
-    height: 200px;
+    width: 300px;
+    height: 300px;
     margin: 0 auto;
-} */
+}
 #calendar_table th, 
 #calendar_table td {
     text-align: center;

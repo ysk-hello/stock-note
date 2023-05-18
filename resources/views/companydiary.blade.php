@@ -4,7 +4,7 @@
 <!-- <div class="container">  -->
 <div class="row justify-content-center">
     <div id="side" class="col-md-3">
-        @include('parts.calendar')
+        <calendar></calendar>
     </div>
     <div id="main" class="col-md-9">
         <companydiary code={{$company_code}} ymd={{$selected_date}}></companydiary>

@@ -6,6 +6,7 @@
                 <th class="text-center">お気に入り</th>
                 <th>コード</th>
                 <th>会社名</th>
+                <th>日記</th>
             </tr>
         </thead>
         <tbody>
@@ -16,6 +17,7 @@
                 </td>
                 <td>{{company.code}}</td>
                 <td><a :href="'/companydiary?ymd=' + ymd + '&code=' + company.code">{{company.name}}</a></td>
+                <td>hogehoge</td>
             </tr>
         </tbody>
     </table>
@@ -84,7 +86,22 @@
                         });
                     }
                 });
-            }
+            },
+            // getDiary() {
+            //     axios.get('/companydiary/get', { 
+            //                 params: {
+            //                     company_code: this.code,
+            //                     date: this.ymd
+            //                 }
+            //             })
+            //             .then(res =>{
+            //                 console.log(res);
+            //                 this.diaryText = res.data['text'];
+            //             })
+            //             .catch(err => {
+            //                 console.log(err);
+            //             });
+            // },
         },
         computed: {
             sortCompanies() {

@@ -27,7 +27,7 @@
                         <i class="fa-regular fa-star" v-show="!company.isFavorite" @click="toggleFavorite(company.code)"></i>
                     </td>
                     <td>{{company.code}}</td>
-                    <td>{{company.name}}</td>
+                    <td><a :href="'/companydiary?code=' + company.code">{{company.name}}</a></td>
                 </tr>
             </tbody>
         </table>

@@ -40,7 +40,7 @@
                             <a class="nav-link" href="{{ route('company') }}">銘柄検索</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('favorite') }}">お気に入り</a>
+                            <a class="nav-link" href="{{ route('favorite') }}">銘柄日記</a>
                         </li>
                     </ul>
 
@@ -107,6 +107,6 @@
         </footer>
     </div>
 
-    <script src="{{asset('js/script.js')}}" defer></script>
+    <!-- <script src="{{asset('js/script.js')}}" defer></script> -->
 </body>
 </html>

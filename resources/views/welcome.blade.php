@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>株ノート| 取引記録を残すアプリ</title>
+        <title>株日記| 取引記録を残すアプリ</title>
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -23,13 +23,13 @@
         <header>
             <div id="header-area">
                 <img src="{{'storage/images/note.jpg'}}" class="header-img" alt="note">
-                <h1>株ノート</h1>
+                <h1>株日記</h1>
                 <p>取引を記録して、過去の取引を振り返り。取引を改善。</p>
             </div>
         </header>
         <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
             <div class="container">
-                <a href="#" class="navbar-brand">株ノート</a>
+                <a href="#" class="navbar-brand">株日記</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-content">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -103,8 +103,8 @@
                 </ul>
             </section>
             <section id="register" class="bg-light border">
-                <h2>株ノートをはじめよう</h2>
-                <p>取引を記録し、過去の記録を振り返る株ノート。株ノートで良い株ライフを。</p>
+                <h2>株日記をはじめよう</h2>
+                <p>取引を記録し、過去の記録を振り返る株日記。株日記で良い株ライフを。</p>
                 <a href="{{route('register')}}" class="btn btn-primary">登録</a>
             </section>
         </main>

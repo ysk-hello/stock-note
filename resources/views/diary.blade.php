@@ -7,7 +7,6 @@
         <calendar></calendar>
     </div>
     <div id="main" class="col-md-9">
-        <h2>{{$selected_date}}</h2>
         <diary ymd="{{$selected_date}}"></diary>
     </div>
 </div>
