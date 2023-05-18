@@ -74,7 +74,7 @@
                 });
             },
             showData() {
-                axios.post('/company/data')
+                axios.post('/company/get')
                 .then((res) => {
                     console.log(res);
 

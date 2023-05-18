@@ -7,7 +7,7 @@
         @include('parts.calendar')
     </div>
     <div id="main" class="col-md-9">
-        <favorite ymd="{{$selected_date}}"></favorite>
+        <companydiary code={{$company_code}} ymd={{$selected_date}}></companydiary>
     </div>
 </div>
 <!-- </div> -->

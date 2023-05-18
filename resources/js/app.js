@@ -24,6 +24,9 @@ app.component('search-company', SearchCompany);
 import Favorite from './components/Favorite.vue';
 app.component('favorite', Favorite);
 
+import CompanyDiary from './components/CompanyDiary.vue';
+app.component('companydiary', CompanyDiary);
+
 import UploadCompany from './components/UploadCompany.vue';
 app.component('upload-company', UploadCompany);
 

@@ -58,7 +58,7 @@ class CompanyController extends Controller
         }
     }
 
-    public function getData(Request $request)
+    public function getCompanies(Request $request)
     {
         logger("get data");
         return Company::orderBy('code', 'asc')->get();

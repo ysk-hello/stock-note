@@ -10,10 +10,10 @@ if(calendarTable){
 }
 
 function cellClicked(e){
-  let month = document.getElementById("current_ym");
+  let ym = document.getElementById("current_ym");
   // e.target: HTMLTableCellElement
   if(e.target.innerText){
-    console.log(month.innerText.trim() + "-" + e.target.innerText.padStart(2, '0'));
-    location.href = "?ymd=" + month.innerText.trim() + "-" + e.target.innerText.padStart(2, '0');
+    console.log(ym.innerText.trim() + "-" + e.target.innerText.padStart(2, '0'));
+    location.href = "?ymd=" + ym.innerText.trim() + "-" + e.target.innerText.padStart(2, '0');
   }
 }

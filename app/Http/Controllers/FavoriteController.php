@@ -7,9 +7,18 @@ use Illuminate\Http\Request;
 
 class FavoriteController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('favorite');
+        if($request->has('ymd')){
+            $selected_date = $request->ymd;
+        }elseif($request->has('ym')){
+            $selected_date = $request->ym. '-01';
+        }
+        else{
+            $selected_date = date('Y-m-d');
+        }
+
+        return view('favorite', ['selected_date' => $selected_date]);
     }
 
     public function getFavorites()

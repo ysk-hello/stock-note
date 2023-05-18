@@ -17,7 +17,7 @@
             console.log('Diary mounted.');
             console.log(this.ymd);
 
-            this.diaryText = this.getDiary();
+            this.getDiary();
         },
         data() {
             return {

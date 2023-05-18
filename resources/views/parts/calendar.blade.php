@@ -79,9 +79,9 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
 
 <div id="calendar">
   <h5>
-    <a href="{{route('diary', ['ym' => $prev])}}"><i class="fa-solid fa-caret-left"></i></a>
+    <a href="{{'?ym=' . $prev}}"><i class="fa-solid fa-caret-left"></i></a>
         <span id="current_ym"> <?= $this_month; ?> </span>
-    <a href="{{route('diary', ['ym' => $next])}}"><i class="fa-solid fa-caret-right"></i></a>
+    <a href="{{'?ym=' . $next}}"><i class="fa-solid fa-caret-right"></i></a>
   </h5>
   <table class="table table-sm table-bordered" id="calendar_table">
     <tr>
