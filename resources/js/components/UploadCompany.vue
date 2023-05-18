@@ -3,7 +3,7 @@
         <div id="side" class="col-md-3">
             <div class="row">
                 <div class="col">
-                    <input type="file" class="form-control-file" name="company-file" @change="onCheckUpload">
+                    <input type="file" class="form-control" name="company-file" @change="onCheckUpload">
                 </div>
             </div>
             <div class="row mt-5">
@@ -21,7 +21,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="company in companies">
+                    <tr v-for="company in companies" :key="company.code">
                         <td>{{company.code}}</td>
                         <td>{{company.name}}</td>
                     </tr>
@@ -34,7 +34,7 @@
 <script>
     export default {
         mounted() {
-            console.log('Component mounted.');
+            console.log('UploadCompany mounted.');
             this.showData();
         },
         data() {

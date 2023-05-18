@@ -20,6 +20,10 @@ class CompaniesTableSeeder extends Seeder
             [
                 'code' => 9433,
                 'name' => 'KDDI'
+            ],
+            [
+                'code' => 9436,
+                'name' => '沖縄セルラー'
             ]
         ];
 

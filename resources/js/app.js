@@ -15,8 +15,14 @@ import { createApp } from 'vue';
 
 const app = createApp({});
 
-// import ExampleComponent from './components/ExampleComponent.vue';
-// app.component('example-component', ExampleComponent);
+import Diary from './components/Diary.vue';
+app.component('diary', Diary);
+
+import SearchCompany from './components/SearchCompany.vue';
+app.component('search-company', SearchCompany);
+
+import Favorite from './components/Favorite.vue';
+app.component('favorite', Favorite);
 
 import UploadCompany from './components/UploadCompany.vue';
 app.component('upload-company', UploadCompany);

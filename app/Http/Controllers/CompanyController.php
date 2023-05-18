@@ -11,7 +11,7 @@ class CompanyController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'admin']);
+        $this->middleware('auth');
     }
 
     public function index()
@@ -19,7 +19,7 @@ class CompanyController extends Controller
         return view('company');
     }
 
-    public function upload(Request $request)
+    public function uploadFile(Request $request)
     {
         try {
             $file = $request->file('file');
@@ -62,5 +62,14 @@ class CompanyController extends Controller
     {
         logger("get data");
         return Company::orderBy('code', 'asc')->get();
+    }
+
+    public function searchCompanies(Request $request) {
+        $keyword = '%' . trim($request['keyword']) . '%';
+        logger($keyword);
+
+        $companies = Company::where('code', 'like', $keyword)->orWhere('name', 'like', $keyword)->get();
+        
+        return $companies;
     }
 }

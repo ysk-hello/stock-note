@@ -7,7 +7,7 @@
         @include('parts.calendar')
     </div>
     <div id="main" class="col-md-9">
-        {{$selected_date}}
+        <favorite></favorite>
     </div>
 </div>
 <!-- </div> -->

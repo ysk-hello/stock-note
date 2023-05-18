@@ -5,14 +5,13 @@ namespace Tests\Feature;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
-class HomeControllerTest extends TestCase
+class DiaryControllerTest extends TestCase
 {
     public function test_index(): void
     {
-        $response = $this->get(route('home'));
+        $response = $this->get(route('diary'));
 
         $response->assertStatus(302);
         $response->assertRedirect('/login');
@@ -23,10 +22,10 @@ class HomeControllerTest extends TestCase
         $user = User::where('name', 'test')->first();
         $this->actingAs($user);
 
-        $response = $this->get(route('home', ['ymd' => '2022-01-01']));
+        $response = $this->get(route('diary', ['ymd' => '2022-01-01']));
 
         $response->assertStatus(200);
-        $response->assertViewIs('home');
+        $response->assertViewIs('diary');
 
         $data = $response->getOriginalContent()->getData();
 
@@ -38,10 +37,10 @@ class HomeControllerTest extends TestCase
         $user = User::where('name', 'test')->first();
         $this->actingAs($user);
 
-        $response = $this->get(route('home', ['ym' => '2022-01']));
+        $response = $this->get(route('diary', ['ym' => '2022-01']));
 
         $response->assertStatus(200);
-        $response->assertViewIs('home');
+        $response->assertViewIs('diary');
 
         $data = $response->getOriginalContent()->getData();
 
@@ -53,13 +52,38 @@ class HomeControllerTest extends TestCase
         $user = User::where('name', 'test')->first();
         $this->actingAs($user);
 
-        $response = $this->get(route('home', []));
+        $response = $this->get(route('diary', []));
 
         $response->assertStatus(200);
-        $response->assertViewIs('home');
+        $response->assertViewIs('diary');
 
         $data = $response->getOriginalContent()->getData();
 
         $this->assertEquals(date('Y-m-d'), $data['selected_date']);
+    }
+
+    public function test_get_diary(): void
+    {
+        $user = User::where('name', 'test')->first();
+        $this->actingAs($user);
+
+        $response = $this->get(route('diary.get', ['date' => '2023-05-16']));
+
+        $response->assertStatus(200);
+
+        // $data = $response->content();
+        // //DD($data);
+
+        // $this->assertEquals('2023-05-16', $data['date']);
+    }
+
+    public function test_save_diary(): void
+    {
+        $user = User::where('name', 'test')->first();
+        $this->actingAs($user);
+
+        $response = $this->post(route('diary.save', ['date' => '2023-05-16', 'text' => 'hogehoge']));
+
+        $response->assertStatus(200);
     }
 }

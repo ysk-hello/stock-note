@@ -19,8 +19,18 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/diary', [App\Http\Controllers\DiaryController::class, 'index'])->name('diary');
+Route::get('/diary/get', [App\Http\Controllers\DiaryController::class, 'getDiary'])->name('diary.get');
+Route::post('/diary/save', [App\Http\Controllers\DiaryController::class, 'saveDiary'])->name('diary.save');
+
+Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin');
 
 Route::get('/company', [App\Http\Controllers\CompanyController::class, 'index'])->name('company');
-Route::post('/company/upload', [App\Http\Controllers\CompanyController::class, 'upload']);
+Route::post('/company/upload', [App\Http\Controllers\CompanyController::class, 'uploadFile']);
 Route::post('/company/data', [App\Http\Controllers\CompanyController::class, 'getData']);
+Route::get('/company/search', [App\Http\Controllers\CompanyController::class, 'searchCompanies'])->name('company.search');
+
+Route::get('/favorite', [App\Http\Controllers\FavoriteController::class, 'index'])->name('favorite');
+Route::get('/favorite/get', [App\Http\Controllers\FavoriteController::class, 'getFavorites'])->name('favorite.get');
+Route::get('/favorite/check', [App\Http\Controllers\FavoriteController::class, 'checkState'])->name('favorite.check');
+Route::get('/favorite/toggle', [App\Http\Controllers\FavoriteController::class, 'toggleState'])->name('favorite.toggle');
