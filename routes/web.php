@@ -30,6 +30,7 @@ Route::get('/company', [App\Http\Controllers\CompanyController::class, 'index'])
 Route::post('/company/upload', [App\Http\Controllers\CompanyController::class, 'uploadFile']);
 Route::post('/company/get', [App\Http\Controllers\CompanyController::class, 'getCompanies']);
 Route::get('/company/search', [App\Http\Controllers\CompanyController::class, 'searchCompanies'])->name('company.search');
+Route::get('/company/getname', [App\Http\Controllers\CompanyController::class, 'getName'])->name('company.getname');
 
 Route::get('/favorite', [App\Http\Controllers\FavoriteController::class, 'index'])->name('favorite');
 Route::get('/favorite/get', [App\Http\Controllers\FavoriteController::class, 'getFavorites'])->name('favorite.get');

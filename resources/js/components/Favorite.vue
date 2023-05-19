@@ -17,7 +17,7 @@
                 </td>
                 <td>{{company.code}}</td>
                 <td><a :href="'/companydiary?ymd=' + ymd + '&code=' + company.code">{{company.name}}</a></td>
-                <td>hogehoge</td>
+                <td>{{company.text}}</td>
             </tr>
         </tbody>
     </table>
@@ -37,29 +37,21 @@
         props: ['ymd'],
         methods: {
             getFavorites() {
-                console.log('get favorites');
-                // alert('get favorites');
-
-                axios.get('/favorite/get')
+                axios.get('/favorite/get',{
+                    params: {
+                        date: this.ymd
+                    }
+                })
                 .then(res => {
+                    // console.log(res);
+
                     this.companies = [];
                     res.data.forEach(d => {
-                        console.log(d['code']);
-
-                        axios.get('/favorite/check', {
-                            params: {
-                                code: d['code']
-                            }
-                        })
-                        .then(res2 => {
-                            this.companies.push({
-                                code: d['code'],
-                                name: d['name'],
-                                isFavorite: res2.data['state']
-                            });
-                        })
-                        .catch(err2 => {
-                            console.log(err2);
+                        this.companies.push({
+                            code: d['code'],
+                            name: d['name'],
+                            text: d['text'],
+                            isFavorite: true
                         });
                     });
                 })
@@ -68,8 +60,6 @@
                 });
             },
             toggleFavorite(code) {
-                console.log(code);
-
                 this.companies.forEach(c => {
                     if(c.code === code){
                         c.isFavorite = !c.isFavorite;
@@ -87,26 +77,9 @@
                     }
                 });
             },
-            // getDiary() {
-            //     axios.get('/companydiary/get', { 
-            //                 params: {
-            //                     company_code: this.code,
-            //                     date: this.ymd
-            //                 }
-            //             })
-            //             .then(res =>{
-            //                 console.log(res);
-            //                 this.diaryText = res.data['text'];
-            //             })
-            //             .catch(err => {
-            //                 console.log(err);
-            //             });
-            // },
         },
         computed: {
             sortCompanies() {
-                console.log('sort');
-
                 this.companies.sort((a, b) => {
                     a = a['code'];
                     b = b['code'];

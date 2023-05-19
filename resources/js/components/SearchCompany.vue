@@ -50,9 +50,6 @@
         },
         methods: {
             searchCompanies() {
-                console.log('search company');
-                // alert('search company');
-
                 //this.isDisabled  = true;
                 axios.get('/company/search', { 
                     params: {
@@ -62,22 +59,10 @@
                 .then(res => {
                     this.companies = [];
                     res.data.forEach(d => {
-                        console.log(d['code']);
-
-                        axios.get('/favorite/check', {
-                            params: {
-                                code: d['code']
-                            }
-                        })
-                        .then(res2 => {
-                            this.companies.push({
-                                code: d['code'],
-                                name: d['name'],
-                                isFavorite: res2.data['state']
-                            });
-                        })
-                        .catch(err2 => {
-                            console.log(err2);
+                        this.companies.push({
+                            code: d['code'],
+                            name: d['name'],
+                            isFavorite: d['user_id'] !== null
                         });
                     });
     
@@ -88,8 +73,6 @@
                 });
             },
             toggleFavorite(code) {
-                console.log(code);
-
                 this.companies.forEach(c => {
                     if(c.code === code){
                         c.isFavorite = !c.isFavorite;
@@ -110,8 +93,6 @@
         },
         computed: {
             sortCompanies() {
-                console.log('sort');
-
                 this.companies.sort((a, b) => {
                     a = a['code'];
                     b = b['code'];

@@ -167,13 +167,10 @@
                 return this.selectedDate.date(day).format('YYYY-MM-DD') === selected;
             },
             cellClicked(e) {
-                console.log('click');
                 let date = e.target.innerText;
-                console.log(date);
 
                 if(date){
                     this.selectedDate = this.selectedDate.date(date);
-                    // console.log(this.selectedDate.format('YYYY-MM-DD'));
 
                     let uRLSearchParams = new URLSearchParams();
                     uRLSearchParams.append('ymd', this.selectedDate.format('YYYY-MM-DD'));

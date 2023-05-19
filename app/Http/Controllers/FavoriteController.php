@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Favorite;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FavoriteController extends Controller
 {
@@ -18,12 +19,25 @@ class FavoriteController extends Controller
         return view('favorite', ['selected_date' => $selected_date]);
     }
 
-    public function getFavorites()
+    public function getFavorites(Request $request)
     {
-        $favorites = Favorite::where('user_id', auth()->id())->join('companies', 'company_code', '=', 'code')
-            ->select('code', 'name')->get();
+        $date = $request['date'];
 
-        return $favorites;
+        // DB::enableQueryLog();
+        
+        $companydiaries = DB::table('favorites')
+            ->where('favorites.user_id', auth()->id())
+            ->leftJoin('company_diaries', function($join) use($date) {
+                $join->on('favorites.company_code', '=', 'company_diaries.company_code')
+                    -> where('company_diaries.date', '=', $date);
+            })
+            ->join('companies', 'favorites.company_code', '=', 'companies.code')
+            ->select('favorites.company_code as code', 'companies.name as name', 'company_diaries.text as text')
+            ->get();
+
+        // dd(DB::getQueryLog());
+        
+        return $companydiaries;
     }
 
     public function checkState(Request $request)

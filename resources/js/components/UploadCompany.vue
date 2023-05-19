@@ -45,14 +45,10 @@
         },
         methods: {
             onCheckUpload(e) {
-                console.log('check');
-                
                 this.file = e.target.files[0];
                 console.log(this.file);
             },
             uploadFile() {
-                console.log('upload');
-
                 const config = {
                     headers: {
                         'content-type': 'multipart/form-data'
@@ -64,7 +60,6 @@
 
                 axios.post('/company/upload', formData, config)
                 .then((res) => {
-                    console.log(res);
                     alert('finished');
 
                     this.showData();
@@ -76,8 +71,6 @@
             showData() {
                 axios.post('/company/get')
                 .then((res) => {
-                    console.log(res);
-
                     res.data.forEach(d => {
                         this.companies.push({
                             code: d['code'],

@@ -14,10 +14,15 @@ class CompanyDiaryController extends Controller
 
     public function index(Request $request)
     {
-        $ymd = $request['ymd'];
         $code = $request['code'];
 
-        return view('companydiary', ['selected_date' => $ymd, 'company_code' => $code]);
+        if($request->has('ymd')){
+            $selected_date = $request->ymd;
+        }else{
+            $selected_date = date('Y-m-d');
+        }
+
+        return view('companydiary', ['selected_date' => $selected_date, 'company_code' => $code]);
     }
 
     public function getCompanyDiary(Request $request)

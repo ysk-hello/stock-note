@@ -23,7 +23,6 @@
     export default {
         mounted() {
             console.log('Diary mounted.');
-            console.log(this.ymd);
 
             this.getDiary();
         },
@@ -60,7 +59,6 @@
                             }
                         })
                         .then(res =>{
-                            console.log(res);
                             this.diaryText = res.data['text'];
                         })
                         .catch(err => {
@@ -70,7 +68,6 @@
             saveDiary() {
                 axios.post('/diary/save', { date: this.ymd, text: this.diaryText })
                     .then(res =>{
-                        console.log(res);
                         this.isEdited = false;
                     })
                     .catch(err => {

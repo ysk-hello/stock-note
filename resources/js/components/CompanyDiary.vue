@@ -2,7 +2,7 @@
     <div class="row my-3">
         <div class="col">
             <h2>{{ ymd }}</h2>
-            <h4>{{ code }}</h4>
+            <h4>{{ code }}: <span v-text="name"></span></h4>
             <button type="button" class="btn btn-primary" v-show="!isEdited" @click="editDiary">編集</button>
             <button type="button" class="btn btn-danger" v-show="isEdited" @click="deleteDiary">削除</button>
         </div>
@@ -34,6 +34,9 @@
 
 <script>
     export default {
+        created() {
+            this.getName();
+        },
         mounted() {
             console.log('CompanyDiary mounted.');
 
@@ -42,6 +45,7 @@
         },
         data() {
             return {
+                name: '',
                 diaryText: '',
                 diaries: [],
                 isEdited: false
@@ -60,10 +64,24 @@
                             }
                         })
                         .then(res =>{
-                            console.log(res);
                             this.diaryText = '';
                             this.isEdited = false;
                             this.getDiaries();
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+            },
+            getName(){
+                axios.get('/company/getname', { 
+                            params: {
+                                code: this.code,
+                            }
+                        })
+                        .then(res =>{
+                            console.log(res.data['name']);
+                            this.name = res.data['name'];
+                            console.log(this.name);
                         })
                         .catch(err => {
                             console.log(err);
@@ -77,7 +95,6 @@
                             }
                         })
                         .then(res =>{
-                            console.log(res);
                             this.diaryText = res.data['text'];
                         })
                         .catch(err => {
@@ -93,8 +110,6 @@
                         })
                         .then(res =>{
                             res.data.forEach(d => {
-                                console.log(d);
-                                
                                 this.diaries.push({
                                     date: d['date'],
                                     text: d['text']
@@ -106,12 +121,8 @@
                         });
             },
             saveDiary() {
-                console.log(this.code);
-                console.log(this.ymd);
-
                 axios.post('/companydiary/save', { company_code: this.code, date: this.ymd, text: this.diaryText })
                     .then(res =>{
-                        console.log(res);
                         this.isEdited = false;
                         this.getDiaries();
                     })
@@ -125,8 +136,6 @@
         },
         computed: {
             sortDiaries() {
-                console.log('sort');
-
                 this.diaries.sort((a, b) => {
                     a = a['date'];
                     b = b['date'];

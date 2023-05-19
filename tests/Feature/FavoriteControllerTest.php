@@ -26,7 +26,7 @@ class FavoriteControllerTest extends TestCase
         $user = User::where('name', 'test')->first();
         $this->actingAs($user);
 
-        $response = $this->get(route('favorite.get'));
+        $response = $this->get(route('favorite.get', ['date' => '2023-05-19']));
 
         $response->assertStatus(200);
 

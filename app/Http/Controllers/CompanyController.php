@@ -68,8 +68,14 @@ class CompanyController extends Controller
         $keyword = '%' . trim($request['keyword']) . '%';
         logger($keyword);
 
-        $companies = Company::where('code', 'like', $keyword)->orWhere('name', 'like', $keyword)->get();
+        $companies = Company::where('code', 'like', $keyword)->orWhere('name', 'like', $keyword)
+            ->leftJoin('favorites', 'code', '=', 'company_code')->select('code', 'name', 'user_id')->get();
         
         return $companies;
+    }
+
+    public function getName(Request $request)
+    {
+        return Company::where('code', '=', $request['code'])->first();
     }
 }

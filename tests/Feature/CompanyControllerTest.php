@@ -35,4 +35,14 @@ class CompanyControllerTest extends TestCase
         //DD($val);     // 出力すると、テスト結果が消える
         $this->assertTrue($val > 0);
     }
+
+    public function test_get_name(): void
+    {
+        $user = User::where('name', 'test')->first();
+        $this->actingAs($user);
+
+        $response = $this->get(route('company.getname', ['code' => '9432']));
+
+        $response->assertStatus(200);
+    }
 }
