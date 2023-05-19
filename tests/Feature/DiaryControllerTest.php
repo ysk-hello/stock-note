@@ -71,4 +71,14 @@ class DiaryControllerTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function test_delete_diary(): void
+    {
+        $user = User::where('name', 'test')->first();
+        $this->actingAs($user);
+
+        $response = $this->get(route('diary.delete', ['date' => '2023-05-16']));
+
+        $response->assertStatus(200);
+    }
 }

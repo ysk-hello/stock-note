@@ -4,7 +4,7 @@
             <span>  {{selectedDate.format('YYYY-MM-DD')}}  </span>
         <a :href="'?ymd=' + next()"><i class="fa-solid fa-caret-right"></i></a>
     </h5>
-    <table class="table table-sm table-bordered" id="calendar_table">
+    <table class="table table-sm table-bordered" id="calendar-table">
         <thead>
             <tr>
                 <td>日</td>

@@ -45,4 +45,13 @@ class DiaryController extends Controller
         $diary->user_id = auth()->id();
         $diary->save();
     }
+
+    public function deleteDiary(Request $request)
+    {
+        $diary = Diary::where(['user_id' => auth()->id(), 'date' => $request['date']])->first();
+
+        if(isset($diary)){
+            $diary->delete();
+        }
+    }
 }

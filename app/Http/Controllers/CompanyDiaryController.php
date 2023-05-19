@@ -57,4 +57,14 @@ class CompanyDiaryController extends Controller
         $diary->user_id = auth()->id();
         $diary->save();
     }
+
+    public function deleteCompanyDiary(Request $request)
+    {
+        $diary = CompanyDiary::where(['company_code' => $request['company_code'], 
+            'user_id' => auth()->id(), 'date' => $request['date']])->first();
+
+        if(isset($diary)){
+            $diary->delete();
+        }
+    }
 }

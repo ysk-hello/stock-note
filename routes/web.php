@@ -22,6 +22,7 @@ Auth::routes();
 Route::get('/diary', [App\Http\Controllers\DiaryController::class, 'index'])->name('diary');
 Route::get('/diary/get', [App\Http\Controllers\DiaryController::class, 'getDiary'])->name('diary.get');
 Route::post('/diary/save', [App\Http\Controllers\DiaryController::class, 'saveDiary'])->name('diary.save');
+Route::get('/diary/delete', [App\Http\Controllers\DiaryController::class, 'deleteDiary'])->name('diary.delete');
 
 Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin');
 
@@ -39,3 +40,4 @@ Route::get('/companydiary', [App\Http\Controllers\CompanyDiaryController::class,
 Route::get('/companydiary/get', [App\Http\Controllers\CompanyDiaryController::class, 'getCompanyDiary'])->name('companydiary.get');
 Route::get('/companydiary/gets', [App\Http\Controllers\CompanyDiaryController::class, 'getCompanyDiaries'])->name('companydiary.gets');
 Route::post('/companydiary/save', [App\Http\Controllers\CompanyDiaryController::class, 'saveCompanyDiary'])->name('companydiary.save');
+Route::get('/companydiary/delete', [App\Http\Controllers\CompanyDiaryController::class, 'deleteCompanyDiary'])->name('companydiary.delete');

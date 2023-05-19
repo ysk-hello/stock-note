@@ -32,6 +32,8 @@
             </tbody>
         </table>
     </div>
+    <div v-else>
+    </div>
 </template>
 
 <script>
@@ -43,7 +45,7 @@
             return {
                 keyword: '',
                 //isDisabled: false,
-                companies: []
+                companies: [],
             }
         },
         methods: {

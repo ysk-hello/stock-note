@@ -1,18 +1,26 @@
 <template>
-    <h2>{{ ymd }}</h2>
-    <h4>{{ code }}</h4>
-    <div class="row">
+    <div class="row my-3">
         <div class="col">
-            <textarea class="form-control" name="diary" cols="30" rows="10" v-model="diaryText"></textarea>
-        </div>
-    </div>
-    <div class="row mt-3">
-        <div class="col d-flex justify-content-end">
-            <button type="button" class="btn btn-info" @click="saveDiary">保存</button>
+            <h2>{{ ymd }}</h2>
+            <h4>{{ code }}</h4>
+            <button type="button" class="btn btn-primary" v-show="!isEdited" @click="editDiary">編集</button>
+            <button type="button" class="btn btn-danger" v-show="isEdited" @click="deleteDiary">削除</button>
         </div>
     </div>
 
-    <div class="card my-2" v-for="diary in diaries" :key="diary.date">
+    <div class="row mt-3">
+        <div class="col">
+            <textarea :class="{'form-control': true, 'not-edit': !isEdited}" name="diary" cols="30" rows="10" v-model="diaryText" :readonly="!isEdited"></textarea>
+        </div>
+    </div>
+    <div class="row my-3">
+        <div class="col d-flex justify-content-end">
+            <button type="button" class="btn btn-primary btn-width mx-3" v-show="isEdited" @click="saveDiary">保存</button>
+            <button type="button" class="btn btn-secondary btn-width mx-3" v-show="isEdited" @click="cancel">キャンセル</button>
+        </div>
+    </div>
+
+    <div class="card my-2" v-for="diary in sortDiaries" :key="diary.date">
         <div class="card-header">
             {{diary.date}}
         </div>
@@ -35,11 +43,32 @@
         data() {
             return {
                 diaryText: '',
-                diaries: []
+                diaries: [],
+                isEdited: false
             }
         },
         props: ['code', 'ymd'],     // https://vuejs.org/guide/components/props.html
         methods: {
+            editDiary() {
+                this.isEdited = !this.isEdited;
+            },
+            deleteDiary() {
+                axios.get('/companydiary/delete', { 
+                            params: {
+                                company_code: this.code,
+                                date: this.ymd
+                            }
+                        })
+                        .then(res =>{
+                            console.log(res);
+                            this.diaryText = '';
+                            this.isEdited = false;
+                            this.getDiaries();
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+            },
             getDiary() {
                 axios.get('/companydiary/get', { 
                             params: {
@@ -56,6 +85,7 @@
                         });
             },
             getDiaries() {
+                this.diaries =[];
                 axios.get('/companydiary/gets', { 
                             params: {
                                 company_code: this.code,
@@ -82,13 +112,29 @@
                 axios.post('/companydiary/save', { company_code: this.code, date: this.ymd, text: this.diaryText })
                     .then(res =>{
                         console.log(res);
+                        this.isEdited = false;
+                        this.getDiaries();
                     })
                     .catch(err => {
                         console.log(err);
                     });
+            },
+            cancel() {
+                this.isEdited = false;
             }
         },
         computed: {
+            sortDiaries() {
+                console.log('sort');
+
+                this.diaries.sort((a, b) => {
+                    a = a['date'];
+                    b = b['date'];
+                    return (a === b ? 0 : a > b ? -1 : 1);
+                });
+
+                return this.diaries;
+            }
         }
     }
 </script>

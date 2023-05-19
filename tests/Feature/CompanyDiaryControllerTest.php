@@ -59,4 +59,14 @@ class CompanyDiaryControllerTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function test_delete_companydiary(): void
+    {
+        $user = User::where('name', 'test')->first();
+        $this->actingAs($user);
+
+        $response = $this->get(route('companydiary.delete', ['company_code' => 9433, 'date' => '2023-05-16']));
+
+        $response->assertStatus(200);
+    }
 }
