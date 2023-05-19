@@ -5,12 +5,13 @@
             <input type="text" class="form-control" name="search-text" v-model="keyword"
                  placeholder="銘柄コード、企業名から検索" @keyup.enter="searchCompanies">
         </div>
-        <div class="col-md-3">
-            <button type="button" class="btn btn-primary" @click="searchCompanies">検索</button>
+        <div class="col-md-3 d-flex justify-content-end">
+            <button type="button" class="btn btn-primary btn-width mx-1" @click="searchCompanies">検索</button>
+            <button type="button" class="btn btn-secondary btn-width mx-1" @click="clearCompanies">クリア</button>
         </div>
     </div>
 
-    <div v-if="companies.length > 0">
+    <div v-if="isSearched">
         <h4 class="mt-5">検索結果</h4>
         <table class="table table-striped w-auto">
             <thead>
@@ -32,8 +33,6 @@
             </tbody>
         </table>
     </div>
-    <div v-else>
-    </div>
 </template>
 
 <script>
@@ -44,13 +43,14 @@
         data() {
             return {
                 keyword: '',
-                //isDisabled: false,
                 companies: [],
+                isSearched: false
             }
         },
         methods: {
             searchCompanies() {
-                //this.isDisabled  = true;
+                this.isSearched = true;
+
                 axios.get('/company/search', { 
                     params: {
                         keyword: this.keyword 
@@ -65,12 +65,15 @@
                             isFavorite: d['user_id'] !== null
                         });
                     });
-    
-                    //this.isDisabled  = false;
                 })
                 .catch(err => {
                     console.log(err);
                 });
+            },
+            clearCompanies() {
+                this.keyword = '';
+                this.companies = [];
+                this.isSearched = false;
             },
             toggleFavorite(code) {
                 this.companies.forEach(c => {
@@ -100,7 +103,7 @@
                 });
 
                 return this.companies;
-            }
+            },
         }
     }
 </script>

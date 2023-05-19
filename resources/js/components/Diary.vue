@@ -2,8 +2,15 @@
     <div class="row my-3">
         <div class="col">
             <h2>{{ ymd }}</h2>
-            <button type="button" class="btn btn-primary" v-show="!isEdited" @click="editDiary">編集</button>
-            <button type="button" class="btn btn-danger" v-show="isEdited" @click="deleteDiary">削除</button>
+            <button type="button" class="btn btn-primary btn-width" v-show="!isEdited" @click="editDiary">編集</button>
+            <button type="button" class="btn btn-danger btn-width" v-show="isEdited" @click="clickDelete">削除</button>
+            <div class="popup" v-show="isShow">
+                <div class="popup-text">削除しますか？</div>
+                <div class="popup-footer">
+                    <button type="button" class="btn btn-danger btn-width mx-3" @click="deleteDiary">OK</button>
+                    <button type="button" class="btn btn-secondary btn-width mx-3" @click="cancelDelete">キャンセル</button>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row mt-3">
@@ -14,7 +21,7 @@
     <div class="row my-3">
         <div class="col d-flex justify-content-end">
             <button type="button" class="btn btn-primary btn-width mx-3" v-show="isEdited" @click="saveDiary">保存</button>
-            <button type="button" class="btn btn-secondary btn-width mx-3" v-show="isEdited" @click="cancel">キャンセル</button>
+            <button type="button" class="btn btn-secondary btn-width mx-3" v-show="isEdited" @click="cancelSave">キャンセル</button>
         </div>
     </div>
 </template>
@@ -29,7 +36,8 @@
         data() {
             return {
                 diaryText: '',
-                isEdited: false
+                isEdited: false,
+                isShow: false
             }
         },
         props: ['ymd'],     // https://vuejs.org/guide/components/props.html
@@ -37,7 +45,11 @@
             editDiary() {
                 this.isEdited = !this.isEdited;
             },
+            clickDelete() {
+                this.isShow = true;
+            },
             deleteDiary() {
+                this.isShow = false;
                 axios.get('/diary/delete', { 
                             params: {
                                 date: this.ymd
@@ -66,6 +78,7 @@
                         });
             },
             saveDiary() {
+                this.isShow = false;
                 axios.post('/diary/save', { date: this.ymd, text: this.diaryText })
                     .then(res =>{
                         this.isEdited = false;
@@ -74,8 +87,12 @@
                         console.log(err);
                     });
             },
-            cancel() {
+            cancelSave() {
+                this.isShow = false;
                 this.isEdited = false;
+            },
+            cancelDelete() {
+                this.isShow = false;
             }
         },
         computed: {
