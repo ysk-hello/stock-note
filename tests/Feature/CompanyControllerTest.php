@@ -31,7 +31,7 @@ class CompanyControllerTest extends TestCase
         $response->assertStatus(200);
         
         $data = json_decode($response->content());
-        $val = count($data);
+        $val = count($data->data);
         //DD($val);     // 出力すると、テスト結果が消える
         $this->assertTrue($val > 0);
     }

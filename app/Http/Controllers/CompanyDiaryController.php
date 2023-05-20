@@ -39,8 +39,12 @@ class CompanyDiaryController extends Controller
 
     public function getCompanyDiaries(Request $request)
     {
-        $diaries = CompanyDiary::where(['company_code' => $request['company_code'], 
-            'user_id' => auth()->id()])->get();
+        $diaries = CompanyDiary
+            ::where(['company_code' => $request['company_code'], 
+                'user_id' => auth()->id()])
+            ->whereDate('date', '<', $request['date'])
+            ->orderBy('date', 'desc')
+            ->paginate(3);
 
         return $diaries;
     }

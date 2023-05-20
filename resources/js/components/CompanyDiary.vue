@@ -4,7 +4,7 @@
             <h2>{{ ymd }}</h2>
             <h4>{{ code }}: <span v-text="name"></span></h4>
             <button type="button" class="btn btn-primary btn-width" v-show="!isEdited" @click="editDiary">編集</button>
-            <button type="button" class="btn btn-danger btn-width" v-show="isEdited" @click="clickDelete">削除</button>
+            <i class="fa-solid fa-trash fa-lg" v-show="isEdited" @click="clickDelete"></i>
             <div class="popup" v-show="isShow">
                 <div class="popup-text">削除しますか？</div>
                 <div class="popup-footer">
@@ -32,10 +32,14 @@
             {{diary.date}}
         </div>
         <div class="card-body">
-            <p class="card-text">
+            <div class="card-text text-line">
                 {{diary.text}}
-            </p>
+            </div>
         </div>
+    </div>
+
+    <div class="text-center">
+        <i class="fa-solid fa-rotate my-3" v-show="currentPage < lastPage" @click="loadMore">もっと見る</i>
     </div>
 </template>
 
@@ -56,7 +60,9 @@
                 diaryText: '',
                 diaries: [],
                 isEdited: false,
-                isShow: false
+                isShow: false,
+                lastPage: 1,
+                currentPage: 1
             }
         },
         props: ['code', 'ymd'],     // https://vuejs.org/guide/components/props.html
@@ -68,6 +74,7 @@
                 this.isShow = true;
             },
             deleteDiary() {
+                this.diaries =[];
                 this.isShow = false;
                 axios.get('/companydiary/delete', { 
                             params: {
@@ -78,6 +85,7 @@
                         .then(res =>{
                             this.diaryText = '';
                             this.isEdited = false;
+                            this.currentPage = 1;
                             this.getDiaries();
                         })
                         .catch(err => {
@@ -114,14 +122,18 @@
                         });
             },
             getDiaries() {
-                this.diaries =[];
+                //this.diaries =[];
                 axios.get('/companydiary/gets', { 
                             params: {
                                 company_code: this.code,
+                                date: this.ymd,
+                                page: this.currentPage
                             }
                         })
                         .then(res =>{
-                            res.data.forEach(d => {
+                            this.lastPage = res.data['last_page'];
+
+                            res.data.data.forEach(d => {
                                 this.diaries.push({
                                     date: d['date'],
                                     text: d['text']
@@ -133,10 +145,12 @@
                         });
             },
             saveDiary() {
+                this.diaries =[];
                 this.isShow = false;
                 axios.post('/companydiary/save', { company_code: this.code, date: this.ymd, text: this.diaryText })
                     .then(res =>{
                         this.isEdited = false;
+                        this.currentPage = 1;
                         this.getDiaries();
                     })
                     .catch(err => {
@@ -149,6 +163,10 @@
             },
             cancelDelete() {
                 this.isShow = false;
+            },
+            loadMore() {
+                ++this.currentPage;
+                this.getDiaries();
             }
         },
         computed: {

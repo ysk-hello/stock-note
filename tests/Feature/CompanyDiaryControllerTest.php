@@ -40,7 +40,7 @@ class CompanyDiaryControllerTest extends TestCase
         $user = User::where('name', 'test')->first();
         $this->actingAs($user);
 
-        $response = $this->get(route('companydiary.gets', ['company_code' => 9433]));
+        $response = $this->get(route('companydiary.gets', ['company_code' => 9433, 'date' => '2023-05-16']));
 
         $response->assertStatus(200);
 

@@ -16,6 +16,7 @@
         "vue": "^3.2.37"
     },
     "dependencies": {
-        "dayjs": "^1.11.7"
+        "dayjs": "^1.11.7",
+        "vuejs-paginate-next": "^1.0.2"
     }
 }

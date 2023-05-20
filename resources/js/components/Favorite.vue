@@ -1,26 +1,29 @@
 <template>
     <h4>お気に入り</h4>
-    <table class="table table-striped w-auto">
-        <thead>
-            <tr>
-                <th class="text-center">お気に入り</th>
-                <th>コード</th>
-                <th>会社名</th>
-                <th>日記</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="company in sortCompanies" :key="company.code">
-                <td class="text-center">
-                        <i class="fa-solid fa-star" v-show="company.isFavorite" @click="toggleFavorite(company.code)"></i>
-                        <i class="fa-regular fa-star" v-show="!company.isFavorite" @click="toggleFavorite(company.code)"></i>
-                </td>
-                <td>{{company.code}}</td>
-                <td><a :href="'/companydiary?ymd=' + ymd + '&code=' + company.code">{{company.name}}</a></td>
-                <td>{{company.text}}</td>
-            </tr>
-        </tbody>
-    </table>
+    <p class="my-3">お気に入りは、最大50件登録できます。（現在: {{ companies.length }}件）</p>
+    <div id="favorite-table">
+        <table class="table table-striped w-auto">
+            <thead>
+                <tr>
+                    <th class="text-center">お気に入り</th>
+                    <th>コード</th>
+                    <th>会社名</th>
+                    <th>日記</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="company in sortCompanies" :key="company.code">
+                    <td class="text-center">
+                            <i class="fa-solid fa-star fa-lg" v-show="company.isFavorite" @click="toggleFavorite(company.code)"></i>
+                            <i class="fa-regular fa-star fa-lg" v-show="!company.isFavorite" @click="toggleFavorite(company.code)"></i>
+                    </td>
+                    <td>{{company.code}}</td>
+                    <td><a :href="'/companydiary?ymd=' + ymd + '&code=' + company.code">{{company.name}}</a></td>
+                    <td class="text-line">{{company.text}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </template>
 
 <script>
@@ -62,7 +65,6 @@
             toggleFavorite(code) {
                 this.companies.forEach(c => {
                     if(c.code === code){
-                        c.isFavorite = !c.isFavorite;
                         axios.get('/favorite/toggle', { 
                             params: {
                                 code: c.code
@@ -70,6 +72,17 @@
                         })
                         .then(res =>{
                             console.log(res);
+                            if(res.data['state'] === 'upper-limit'){
+                                alert('お気に入りに登録できませんでした。登録できるのは最大50件です。');
+                                c.isFavorite = false;
+                            }
+                            else{
+                                c.isFavorite = !c.isFavorite;
+                                if(res.data['state'] === 'delete'){
+                                    // 更新
+                                    this.getFavorites();
+                                }
+                            }
                         })
                         .catch(err => {
                             console.log(err);

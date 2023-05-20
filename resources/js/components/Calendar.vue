@@ -32,8 +32,8 @@
 </template>
 
 <script>
-    import dayjs from "dayjs";
-    dayjs.locale("ja");
+    import dayjs from 'dayjs';
+    dayjs.locale('ja');
 
     export default {
         created() {

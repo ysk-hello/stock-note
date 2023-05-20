@@ -74,9 +74,9 @@
 }
 /* calendar */
 #calendar-table {
-    table-layout: fixed;
-    width: 300px;
-    height: 300px;
+    /* table-layout: fixed;
+    width: 250px;
+    height: 250px; */
     margin: 0 auto;
 }
 #calendar-table th, 
@@ -99,4 +99,13 @@
 }
 #calendar-table .selected {
     border: 3px solid red;
+}
+/* search */
+/* favorite */
+#favorite-table tbody tr {
+    /* height: 100px; */
+}
+/* campanydiary */
+.text-line {
+    white-space: pre-line;
 }

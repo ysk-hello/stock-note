@@ -62,21 +62,27 @@ class FavoriteController extends Controller
         if(isset($favorite)){
             // 削除
             logger('delete');
-
             $favorite->delete();
 
-            return ['state' => false];
+            return ['state' => 'delete'];
         }
         else{
-            // 追加
-            logger('add');
+            $favorites = Favorite::where(['user_id' => auth()->id()])->get();
+            if($favorites->count() < 50){
+                // 追加
+                logger('add');
+                $favorite = new Favorite;
+                $favorite->company_code = $request['code'];
+                $favorite->user_id = auth()->id();
+                $favorite->save();
+    
+                return ['state' => 'add'];
+            }
+            else{
+                logger('upper-limit');
 
-            $favorite = new Favorite;
-            $favorite->company_code = $request['code'];
-            $favorite->user_id = auth()->id();
-            $favorite->save();
-
-            return ['state' => true];
+                return ['state' => 'upper-limit'];
+            }
         }
     }
 }

@@ -69,8 +69,13 @@ class CompanyController extends Controller
         logger($keyword);
 
         $companies = Company::where('code', 'like', $keyword)->orWhere('name', 'like', $keyword)
-            ->leftJoin('favorites', 'code', '=', 'company_code')->select('code', 'name', 'user_id')->get();
+            ->leftJoin('favorites', 'code', '=', 'company_code')
+            ->select('code', 'name', 'user_id')
+            ->orderBy('code', 'asc')
+            ->paginate(50);
         
+        logger($companies);
+
         return $companies;
     }
 

@@ -3,7 +3,7 @@
         <div class="col">
             <h2>{{ ymd }}</h2>
             <button type="button" class="btn btn-primary btn-width" v-show="!isEdited" @click="editDiary">編集</button>
-            <button type="button" class="btn btn-danger btn-width" v-show="isEdited" @click="clickDelete">削除</button>
+            <i class="fa-solid fa-trash fa-lg" v-show="isEdited" @click="clickDelete"></i>
             <div class="popup" v-show="isShow">
                 <div class="popup-text">削除しますか？</div>
                 <div class="popup-footer">
@@ -15,7 +15,7 @@
     </div>
     <div class="row mt-3">
         <div class="col">
-            <textarea :class="{'form-control': true, 'not-edit': !isEdited}" name="diary" cols="30" rows="10" v-model="diaryText" :readonly="!isEdited"></textarea>
+            <textarea :class="{'form-control': true, 'not-edit': !isEdited}" name="diary" cols="30" rows="10" v-model="diaryText" :readonly="!isEdited" @input="inputText"></textarea>
         </div>
     </div>
     <div class="row my-3">
@@ -93,6 +93,9 @@
             },
             cancelDelete() {
                 this.isShow = false;
+            },
+            inputText(){
+                console.log(this.diaryText.length);
             }
         },
         computed: {
