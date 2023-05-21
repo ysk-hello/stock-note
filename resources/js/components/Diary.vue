@@ -4,6 +4,7 @@
             <h2>{{ ymd }}</h2>
             <button type="button" class="btn btn-primary btn-width" v-show="!isEdited" @click="editDiary">編集</button>
             <i class="fa-solid fa-trash fa-lg" v-show="isEdited" @click="clickDelete"></i>
+            <message :type="message.type" :text="message.text"></message>
             <div class="popup" v-show="isShow">
                 <div class="popup-text">削除しますか？</div>
                 <div class="popup-footer">
@@ -37,13 +38,20 @@
             return {
                 diaryText: '',
                 isEdited: false,
-                isShow: false
+                isShow: false,
+                message: {
+                    type: '',
+                    text: ''
+                }
             }
         },
         props: ['ymd'],     // https://vuejs.org/guide/components/props.html
         methods: {
             editDiary() {
                 this.isEdited = !this.isEdited;
+
+                this.message.type = '';
+                this.message.text = ''
             },
             clickDelete() {
                 this.isShow = true;
@@ -59,6 +67,9 @@
                             console.log(res);
                             this.diaryText = '';
                             this.isEdited = false;
+
+                            this.message.type = 'success';
+                            this.message.text = '削除しました。'
                         })
                         .catch(err => {
                             console.log(err);
@@ -82,6 +93,9 @@
                 axios.post('/diary/save', { date: this.ymd, text: this.diaryText })
                     .then(res =>{
                         this.isEdited = false;
+
+                        this.message.type = 'success';
+                        this.message.text = '保存しました。'
                     })
                     .catch(err => {
                         console.log(err);
@@ -95,7 +109,16 @@
                 this.isShow = false;
             },
             inputText(){
-                console.log(this.diaryText.length);
+                console.log(this.diaryText);
+
+                if(this.diaryText && this.diaryText.length > 100){
+                    this.message.type = 'danger';
+                    this.message.text = '文字数を100文字以内にしてください。';
+                }
+                else{
+                    this.message.type = '';
+                    this.message.text = '';
+                }
             }
         },
         computed: {

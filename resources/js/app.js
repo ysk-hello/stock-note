@@ -33,6 +33,9 @@ app.component('companydiary', CompanyDiary);
 import UploadCompany from './components/UploadCompany.vue';
 app.component('upload-company', UploadCompany);
 
+import Message from './components/Message.vue';
+app.component('message', Message);
+
 import Paginate from 'vuejs-paginate-next';
 app.component('paginate', Paginate);
 
