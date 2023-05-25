@@ -1,8 +1,13 @@
 <template>
     <h5>
-        <a :href="'?ymd=' + prev()"><i class="fa-solid fa-caret-left"></i></a>
-            <span>  {{selectedDate.format('YYYY-MM-DD')}}  </span>
-        <a :href="'?ymd=' + next()"><i class="fa-solid fa-caret-right"></i></a>
+        <span>{{selectedDate.format('YYYY-MM-DD')}}</span>
+        <div>
+            <a :href="'?ymd=' + prev2()"><i class="fa-solid fa-angles-left"></i></a>
+            <a :href="'?ymd=' + prev()"><i class="fa-solid fa-angle-left"></i></a>
+            <a :href="'?ymd=' + toToday()"> 今日 </a>
+            <a :href="'?ymd=' + next()"><i class="fa-solid fa-angle-right"></i></a>
+            <a :href="'?ymd=' + next2()"><i class="fa-solid fa-angles-right"></i></a>
+        </div>
     </h5>
     <table class="table table-sm table-bordered" id="calendar-table">
         <thead>
@@ -186,6 +191,15 @@
             },
             next() {
                 return this.selectedDate.add(1, 'M').format('YYYY-MM-DD');
+            },
+            prev2() {
+                return this.selectedDate.subtract(1, 'y').format('YYYY-MM-DD');
+            },
+            next2() {
+                return this.selectedDate.add(1, 'y').format('YYYY-MM-DD');
+            },
+            toToday() {
+                return dayjs().format('YYYY-MM-DD');
             }
         },
         computed: {
