@@ -30,6 +30,16 @@ class DiaryController extends Controller
         return $diary;
     }
 
+    public function getDiaries(Request $request)
+    {
+        $diaries = Diary::where('user_id', '=', auth()->id())
+            ->whereDate('date', '<', $request['date'])
+            ->orderBy('date', 'desc')
+            ->paginate(3);
+
+        return $diaries;
+    }
+
     public function saveDiary(Request $request)
     {
         logger($request['date']);

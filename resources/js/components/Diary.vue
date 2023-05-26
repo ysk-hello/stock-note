@@ -25,6 +25,21 @@
             <button type="button" class="btn btn-secondary btn-width mx-3" v-show="isEdited" @click="cancelSave">キャンセル</button>
         </div>
     </div>
+
+    <div class="card my-2" v-for="diary in sortDiaries" :key="diary.date">
+        <div class="card-header">
+            {{diary.date}}
+        </div>
+        <div class="card-body">
+            <div class="card-text text-line">
+                {{diary.text}}
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <i class="fa-solid fa-rotate my-3" v-show="currentPage < lastPage" @click="loadMore">もっと見る</i>
+    </div>
 </template>
 
 <script>
@@ -33,6 +48,7 @@
             console.log('Diary mounted.');
 
             this.getDiary();
+            this.getDiaries();
         },
         data() {
             return {
@@ -42,7 +58,10 @@
                 message: {
                     type: '',
                     text: ''
-                }
+                },
+                lastPage: 1,
+                currentPage: 1,
+                diaries: []
             }
         },
         props: ['ymd'],     // https://vuejs.org/guide/components/props.html
@@ -119,9 +138,44 @@
                     this.message.type = '';
                     this.message.text = '';
                 }
+            },
+            loadMore() {
+                ++this.currentPage;
+                this.getDiaries();
+            },
+            getDiaries() {
+                //this.diaries =[];
+                axios.get('/diary/gets', { 
+                            params: {
+                                date: this.ymd,
+                                page: this.currentPage
+                            }
+                        })
+                        .then(res =>{
+                            this.lastPage = res.data['last_page'];
+
+                            res.data.data.forEach(d => {
+                                this.diaries.push({
+                                    date: d['date'],
+                                    text: d['text']
+                                });
+                            });
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
             }
         },
         computed: {
+            sortDiaries() {
+                this.diaries.sort((a, b) => {
+                    a = a['date'];
+                    b = b['date'];
+                    return (a === b ? 0 : a > b ? -1 : 1);
+                });
+
+                return this.diaries;
+            }
         }
     }
 </script>

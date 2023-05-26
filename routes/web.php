@@ -21,6 +21,7 @@ Auth::routes();
 
 Route::get('/diary', [App\Http\Controllers\DiaryController::class, 'index'])->name('diary');
 Route::get('/diary/get', [App\Http\Controllers\DiaryController::class, 'getDiary'])->name('diary.get');
+Route::get('/diary/gets', [App\Http\Controllers\DiaryController::class, 'getDiaries'])->name('diary.gets');
 Route::post('/diary/save', [App\Http\Controllers\DiaryController::class, 'saveDiary'])->name('diary.save');
 Route::get('/diary/delete', [App\Http\Controllers\DiaryController::class, 'deleteDiary'])->name('diary.delete');
 

@@ -62,6 +62,16 @@ class DiaryControllerTest extends TestCase
         // $this->assertEquals('2023-05-16', $data['date']);
     }
 
+    public function test_get_diaries(): void
+    {
+        $user = User::where('name', 'test')->first();
+        $this->actingAs($user);
+
+        $response = $this->get(route('diary.gets', ['date' => '2023-05-16']));
+
+        $response->assertStatus(200);
+    }
+
     public function test_save_diary(): void
     {
         $user = User::where('name', 'test')->first();
