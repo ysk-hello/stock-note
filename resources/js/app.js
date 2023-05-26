@@ -39,6 +39,12 @@ app.component('message', Message);
 import Paginate from 'vuejs-paginate-next';
 app.component('paginate', Paginate);
 
+import SearchDiary from './components/SearchDiary.vue';
+app.component('search-diary', SearchDiary);
+
+import ReportDiary from './components/ReportDiary.vue';
+app.component('report-diary', ReportDiary);
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

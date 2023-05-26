@@ -42,3 +42,12 @@ Route::get('/companydiary/get', [App\Http\Controllers\CompanyDiaryController::cl
 Route::get('/companydiary/gets', [App\Http\Controllers\CompanyDiaryController::class, 'getCompanyDiaries'])->name('companydiary.gets');
 Route::post('/companydiary/save', [App\Http\Controllers\CompanyDiaryController::class, 'saveCompanyDiary'])->name('companydiary.save');
 Route::get('/companydiary/delete', [App\Http\Controllers\CompanyDiaryController::class, 'deleteCompanyDiary'])->name('companydiary.delete');
+
+Route::get('/search', [App\Http\Controllers\SearchController::class, 'index'])->name('search');
+Route::get('/search/diary', [App\Http\Controllers\SearchController::class, 'searchDiaries'])->name('search.diary');
+Route::get('/search/companydiary', [App\Http\Controllers\SearchController::class, 'searchCompanyDiaries'])->name('search.companydiary');
+
+Route::get('/report', [App\Http\Controllers\ReportConroller::class, 'index'])->name('report');
+Route::get('/report/diary', [App\Http\Controllers\ReportConroller::class, 'reportDiaries'])->name('report.diary');
+Route::get('/report/companydiary', [App\Http\Controllers\ReportConroller::class, 'reportCompanyDiaries'])->name('report.companydiary');
+

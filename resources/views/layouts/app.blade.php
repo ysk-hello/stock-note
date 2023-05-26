@@ -45,6 +45,12 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('favorite') }}">銘柄日記</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('search') }}">日記検索</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('report') }}">日記出力</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
