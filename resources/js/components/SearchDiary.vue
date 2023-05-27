@@ -63,6 +63,7 @@
                     <th>コード</th>
                     <th>会社名</th>
                     <th>日付</th>
+                    <th>評価</th>
                     <th>日記</th>
                 </tr>
             </thead>
@@ -71,6 +72,8 @@
                     <td>{{diary.code}}</td>
                     <td>{{diary.name}}</td>
                     <td><a :href="'/companydiary?ymd=' + diary.date + '&code=' + diary.code">{{diary.date}}</a></td>
+                    <td><span class="badge" :class="{'bg-danger': diary.judgement==='0', 'bg-secondary': diary.judgement==='1', 'bg-primary': diary.judgement==='2'}">
+                        {{ getJudgementStr(diary.judgement) }}</span></td>
                     <td>{{diary.text}}</td>
                 </tr>
             </tbody>
@@ -151,6 +154,7 @@
                                 code: d['code'],
                                 name: d['name'],
                                 date: d['date'],
+                                judgement: d['judgement'],
                                 text: d['text'],
                             });
                         });
@@ -178,6 +182,18 @@
                     left: 0,
                     //behavior: 'smooth'
                 });
+            },
+            getJudgementStr(judge){
+                switch(judge){
+                    case '0':
+                        return '買い';
+                    case '1':
+                        return '中立';
+                    case '2':
+                        return '売り';
+                    default:
+                        return '';
+                }
             }
         },
         computed: {

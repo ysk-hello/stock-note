@@ -8,6 +8,7 @@
                     <th class="text-center">お気に入り</th>
                     <th>コード</th>
                     <th>会社名</th>
+                    <th>評価</th>
                     <th>日記</th>
                 </tr>
             </thead>
@@ -19,6 +20,8 @@
                     </td>
                     <td>{{company.code}}</td>
                     <td><a :href="'/companydiary?ymd=' + ymd + '&code=' + company.code">{{company.name}}</a></td>
+                    <td><span class="badge" :class="{'bg-danger': company.judgement==='0', 'bg-secondary': company.judgement==='1', 'bg-primary': company.judgement==='2'}">
+                        {{ getJudgementStr(company.judgement) }}</span></td>
                     <td class="text-line">{{company.text}}</td>
                 </tr>
             </tbody>
@@ -53,6 +56,7 @@
                         this.companies.push({
                             code: d['code'],
                             name: d['name'],
+                            judgement: d['judgement'],
                             text: d['text'],
                             isFavorite: true
                         });
@@ -89,6 +93,18 @@
                         });
                     }
                 });
+            },
+            getJudgementStr(judge){
+                switch(judge){
+                    case '0':
+                        return '買い';
+                    case '1':
+                        return '中立';
+                    case '2':
+                        return '売り';
+                    default:
+                        return '';
+                }
             },
         },
         computed: {

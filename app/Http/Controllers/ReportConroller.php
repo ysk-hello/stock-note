@@ -58,11 +58,11 @@ class ReportConroller extends Controller
             ->where('date', '>=', $request['startDate'])
             ->where('date', '<=', $request['endDate'])
             ->leftJoin('companies', 'company_code', 'code')
-            ->select('company_diaries.company_code', 'companies.name', 'company_diaries.date', 'company_diaries.text')
+            ->select('company_diaries.company_code', 'companies.name', 'company_diaries.date', 'company_diaries.judgement', 'company_diaries.text')
             ->orderBy('company_diaries.company_code', 'asc')
             ->orderBy('company_diaries.date', 'asc')
             ->get();
-        $csvHeader = ['code', 'name', 'date', 'text'];
+        $csvHeader = ['code', 'name', 'date', 'judgement', 'text'];
         $csvData = $diaries->toArray();
 
         $callback = function() use ($csvHeader, $csvData) {

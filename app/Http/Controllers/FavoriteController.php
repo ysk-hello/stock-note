@@ -32,7 +32,7 @@ class FavoriteController extends Controller
                     -> where('company_diaries.date', '=', $date);
             })
             ->join('companies', 'favorites.company_code', '=', 'companies.code')
-            ->select('favorites.company_code as code', 'companies.name as name', 'company_diaries.text as text')
+            ->select('favorites.company_code as code', 'companies.name as name', 'company_diaries.judgement as judgement', 'company_diaries.text as text')
             ->get();
 
         // dd(DB::getQueryLog());

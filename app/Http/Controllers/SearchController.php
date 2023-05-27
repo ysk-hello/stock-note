@@ -39,7 +39,7 @@ class SearchController extends Controller
         $diaries = CompanyDiary::where('user_id', '=', auth()->id())->where('text', 'like', $keyword)
             ->leftJoin('companies', 'company_code', 'code')
             ->orderBy('company_diaries.date', 'desc')
-            ->select('company_diaries.company_code as code', 'companies.name', 'company_diaries.date', 'company_diaries.text')
+            ->select('company_diaries.company_code as code', 'companies.name', 'company_diaries.date', 'company_diaries.judgement', 'company_diaries.text')
             ->paginate(50);
         
         logger($diaries);
