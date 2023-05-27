@@ -1,8 +1,12 @@
 <template>
     <div class="row my-3">
         <div class="col">
-            <h2>{{ ymd }}</h2>
-            <h4>{{ code }}: <span v-text="name"></span></h4>
+            <h2>{{ code }}: <span v-text="name"></span></h2>
+            <h4>{{ ymd }} <span class="badge" :class="{'bg-danger': judgement==='0', 'bg-secondary': judgement==='1', 'bg-primary': judgement==='2'}" v-show="!isEdited">{{ getJudgementStr(judgement) }}</span></h4>
+        </div>
+    </div>
+    <div class="row mb-3 d-flex align-items-center">
+        <div class="col-md-3">
             <button type="button" class="btn btn-primary btn-width" v-show="!isEdited" @click="editDiary">編集</button>
             <i class="fa-solid fa-trash fa-lg" v-show="isEdited" @click="clickDelete"></i>
             <div class="popup" v-show="isShow">
@@ -13,9 +17,18 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-6"></div>
+        <div class="col-md-3">
+            <select class="form-select w-100" v-model="judgement" v-show="isEdited">
+                <option value=""></option>
+                <option value="0">買い</option>
+                <option value="1">中立</option>
+                <option value="2">売り</option>
+            </select>
+        </div>
     </div>
 
-    <div class="row mt-3">
+    <div class="row">
         <div class="col">
             <textarea :class="{'form-control': true, 'not-edit': !isEdited}" name="diary" cols="30" rows="10" v-model="diaryText" :readonly="!isEdited"></textarea>
         </div>
@@ -29,7 +42,7 @@
 
     <div class="card my-2" v-for="diary in sortDiaries" :key="diary.date">
         <div class="card-header">
-            {{diary.date}}
+            {{diary.date}} <span class="badge" :class="{'bg-danger': diary.judgement==='0', 'bg-secondary': diary.judgement==='1', 'bg-primary': diary.judgement==='2'}">{{getJudgementStr(diary.judgement)}}</span>
         </div>
         <div class="card-body">
             <div class="card-text text-line">
@@ -62,7 +75,8 @@
                 isEdited: false,
                 isShow: false,
                 lastPage: 1,
-                currentPage: 1
+                currentPage: 1,
+                judgement: null
             }
         },
         props: ['code', 'ymd'],     // https://vuejs.org/guide/components/props.html
@@ -116,6 +130,7 @@
                         })
                         .then(res =>{
                             this.diaryText = res.data['text'];
+                            this.judgement = res.data['judgement'];
                         })
                         .catch(err => {
                             console.log(err);
@@ -136,7 +151,8 @@
                             res.data.data.forEach(d => {
                                 this.diaries.push({
                                     date: d['date'],
-                                    text: d['text']
+                                    text: d['text'],
+                                    judgement: d['judgement']
                                 });
                             });
                         })
@@ -147,7 +163,7 @@
             saveDiary() {
                 this.diaries =[];
                 this.isShow = false;
-                axios.post('/companydiary/save', { company_code: this.code, date: this.ymd, text: this.diaryText })
+                axios.post('/companydiary/save', { company_code: this.code, date: this.ymd, text: this.diaryText, judgement: this.judgement })
                     .then(res =>{
                         this.isEdited = false;
                         this.currentPage = 1;
@@ -167,6 +183,18 @@
             loadMore() {
                 ++this.currentPage;
                 this.getDiaries();
+            },
+            getJudgementStr(judge){
+                switch(judge){
+                    case '0':
+                        return '買い';
+                    case '1':
+                        return '中立';
+                    case '2':
+                        return '売り';
+                    default:
+                        return '';
+                }
             }
         },
         computed: {
@@ -178,7 +206,7 @@
                 });
 
                 return this.diaries;
-            }
+            },
         }
     }
 </script>

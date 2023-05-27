@@ -63,6 +63,7 @@ class CompanyDiaryController extends Controller
         $diary->company_code = $request['company_code'];
         $diary->date = $request['date'];
         $diary->text = $request['text'];
+        $diary->judgement = $request['judgement'];
         $diary->user_id = auth()->id();
         $diary->save();
     }

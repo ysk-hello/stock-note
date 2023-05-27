@@ -16,6 +16,7 @@ return new class extends Migration
             $table->char('company_code', 10);
             $table->date('date');
             $table->text('text')->nullable();
+            $table->char('judgement', 1)->nullable();
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
             
