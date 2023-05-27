@@ -2,6 +2,11 @@
     <div class="row my-3">
         <div class="col">
             <h2>{{ code }}: <span v-text="name"></span></h2>
+            <div class="mb-3">
+                お気に入り: 
+                <i class="fa-solid fa-star fa-lg" v-show="isFavorite" @click="toggleFavorite()"></i>
+                <i class="fa-regular fa-star fa-lg" v-show="!isFavorite" @click="toggleFavorite()"></i>
+            </div>
             <h4>{{ ymd }} <span class="badge" :class="{'bg-danger': judgement==='0', 'bg-secondary': judgement==='1', 'bg-primary': judgement==='2'}" v-show="!isEdited">{{ getJudgementStr(judgement) }}</span></h4>
         </div>
     </div>
@@ -60,6 +65,7 @@
     export default {
         created() {
             this.getName();
+            this.checkFavorite();
         },
         mounted() {
             console.log('CompanyDiary mounted.');
@@ -69,6 +75,7 @@
         },
         data() {
             return {
+                isFavorite: false,
                 name: '',
                 diaryText: '',
                 diaries: [],
@@ -113,9 +120,20 @@
                             }
                         })
                         .then(res =>{
-                            console.log(res.data['name']);
                             this.name = res.data['name'];
-                            console.log(this.name);
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+            },
+            checkFavorite(){
+                axios.get('/favorite/check', { 
+                            params: {
+                                code: this.code,
+                            }
+                        })
+                        .then(res =>{
+                            this.isFavorite = res.data['state'];
                         })
                         .catch(err => {
                             console.log(err);
@@ -195,7 +213,27 @@
                     default:
                         return '';
                 }
-            }
+            },
+            toggleFavorite() {
+                axios.get('/favorite/toggle', { 
+                        params: {
+                            code: this.code,
+                        }
+                    })
+                    .then(res =>{
+                        console.log(res);
+                        if(res.data['state'] === 'upper-limit'){
+                            alert('お気に入りに登録できませんでした。登録できるのは最大50件です。');
+                            this.isFavorite = false;
+                        }
+                        else{
+                            this.isFavorite = !this.isFavorite;
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            },
         },
         computed: {
             sortDiaries() {
